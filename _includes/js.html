@@ -2,7 +2,9 @@
   var interval, bytes = 0, total = 1, i = 0,
     src = 'https://res.cloudinary.com/active-bridge/image/upload/bridge_front_ncgkbi.png?',
     speedtext = document.getElementById('speedtext'),
-    circle = document.getElementById('bar');
+    circle = document.getElementById('bar'),
+    r = circle.getAttribute('r'),
+    c = Math.PI * (r * 2);
 
   function updateProgress(event) {
     bytes = event.loaded;
@@ -25,9 +27,7 @@
   }
 
   function progress(val) {
-    var r = circle.getAttribute('r'),
-    c = Math.PI*(r*2);
-    var pct = ((100-val)/100)*c;
+    var pct = ((100 - val) / 100) * c;
     circle.style.strokeDashoffset = pct;
     if (val == 100) {
       clearInterval(interval);
