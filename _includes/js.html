@@ -1,7 +1,7 @@
 <script type="text/javascript" language="javascript" charset="utf-8">
   var interval, bytes = 0, total = 1, i = 0,
     src = 'https://res.cloudinary.com/active-bridge/image/upload/bridge_front_ncgkbi.png?',
-    speed = document.getElementById('speedtext'),
+    speedtext = document.getElementById('speedtext'),
     circle = document.getElementById('bar');
 
   function updateProgress(event) {
@@ -19,7 +19,7 @@
     interval = setInterval(function(){
       i += 1;
       s = (bytes / 10 / i).toFixed();
-      speed.innerHTML = s + 'KB/s';
+      speedtext.innerHTML = s + 'KB/s';
       progress(bytes/total * 100);
     }, 100)
   }

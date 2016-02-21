@@ -33,7 +33,7 @@
   #svg circle {
     stroke-dashoffset: 0;
     transition: stroke-dashoffset .2s linear;
-    stroke-dasharray: 251;
+    stroke-dasharray: 252;
     stroke: #666;
     stroke-width: 10px;
   }
@@ -41,7 +41,14 @@
   #svg text {
     font-size: 2vmin;
     fill: #9b59b6;
+    user-select: none;
   }
 
   #svg #bar { stroke: #9b59b6; }
+
+  @media only screen and (max-width: 500px) {
+    #svg text {
+      font-size: 3vmin;
+    }
+  }
 </style>
