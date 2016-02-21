@@ -1,3 +1,16 @@
+var staticCacheName = 'static';
+var version = 1;
+
+function updateCache() {
+  return caches.open(staticCacheName + version).then(function (cache) {
+    return cache.addAll(['/offline.html']);
+  });
+};
+
+self.addEventListener('install', function (event) {
+    event.waitUntil(updateCache());
+});
+
 var doesRequestAcceptHtml = function(request) {
   return request.headers.get('Accept').split(',').some(function (type) { return type === 'text/html'; });
 };
