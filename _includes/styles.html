@@ -1,0 +1,47 @@
+<style type="text/css" media="screen">
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 2%;
+    text-align: center;
+    box-sizing: border-box;
+    background: #2e2e2e;
+    background: linear-gradient(to left top, #111,#2e2e2e) no-repeat;
+  }
+
+  .svg {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    max-width: 90vh;
+    vertical-align: middle;
+  }
+
+  #svg {
+    cursor: pointer;
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    left: 0;
+  }
+
+  #svg circle {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset .2s linear;
+    stroke-dasharray: 251;
+    stroke: #666;
+    stroke-width: 10px;
+  }
+
+  #svg text {
+    font-size: 2vmin;
+    fill: #9b59b6;
+  }
+
+  #svg #bar { stroke: #9b59b6; }
+</style>

@@ -2,9 +2,10 @@
 layout: default
 ---
 
-<svg id="svg" onclick='start()' viewPort="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <circle r="90" cx="47%" cy="47%" fill="transparent" stroke-dasharray="1565.48" stroke-dashoffset="0"></circle>
-  <circle id="bar" r="90" cx="47%" cy="47%" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
-  <text id='speedtext' x="38%" y="48%" width='100%' fill="#111">START</text>
-</svg>
-
+<div class='svg'>
+  <svg id="svg" onclick='start()' viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+    <circle r="40" cx="50" cy="50" fill="transparent"></circle>
+    <circle id="bar" r="40" cx="50" cy="50" fill="transparent"></circle>
+    <text id='speedtext' x="50" y="54" text-anchor='middle' fill="#111">START</text>
+  </svg>
+</div>

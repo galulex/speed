@@ -1,0 +1,51 @@
+<script type="text/javascript" language="javascript" charset="utf-8">
+  var interval, bytes = 0, total = 1, i = 0,
+    src = 'https://res.cloudinary.com/active-bridge/image/upload/bridge_front_ncgkbi.png?',
+    speed = document.getElementById('speedtext'),
+    circle = document.getElementById('bar');
+
+  function updateProgress(event) {
+    bytes = event.loaded;
+    total = event.total;
+  }
+
+  function start(){
+    if (interval) return false;
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("progress", updateProgress);
+    xhr.open('GET', src + Date.now())
+    xhr.send()
+
+    interval = setInterval(function(){
+      i += 1;
+      s = (bytes / 10 / i).toFixed();
+      speed.innerHTML = s + 'KB/s';
+      progress(bytes/total * 100);
+    }, 100)
+  }
+
+  function progress(val) {
+    var r = circle.getAttribute('r'),
+    c = Math.PI*(r*2);
+    var pct = ((100-val)/100)*c;
+    circle.style.strokeDashoffset = pct;
+    if (val == 100) {
+      clearInterval(interval);
+      interval = null;
+      i = 0;
+      bytes = 0;
+      total = 0;
+    }
+  }
+
+  function ping() {
+    var xhr = new XMLHttpRequest(), d = new Date;
+    xhr.open('HEAD', src)
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var time = new Date - d;
+      }
+    };
+    xhr.send()
+  }
+</script>
