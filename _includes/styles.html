@@ -7,7 +7,7 @@
     height: 100%;
     position: relative;
     margin: 0;
-    padding: 2%;
+    padding: 0;
     text-align: center;
     box-sizing: border-box;
     background: #2e2e2e;
@@ -25,10 +25,10 @@
 
   #svg {
     cursor: pointer;
-    position: absolute;
-    display: inline-block;
-    top: 0;
-    left: 0;
+    display: block;
+    max-height: 80vmin;
+    max-width: 80vmin;
+    margin: 0 auto;
   }
 
   #svg circle {
@@ -40,9 +40,11 @@
   }
 
   #svg text {
-    font-size: 2vmin;
+    font-size: 1.6vmin;
     fill: #9b59b6;
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
   }
 
   #svg #bar { stroke: #9b59b6; }
