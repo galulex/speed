@@ -1,0 +1,6 @@
+title: Internet Speed Test
+description: Test you internet speed connection
+baseurl: ""
+
+# Build settings
+markdown: kramdown

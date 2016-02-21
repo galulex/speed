@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>Speed Test</title>
+    <style type="text/css" media="screen">
+      body {
+        position: relative;
+        margin: 0;
+        padding: 2%;
+      }
+
+      #svg {
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+        height: 250px;
+        top: 0;
+        left: 0;
+      }
+
+      #svg circle {
+        stroke-dashoffset: 0;
+        transition: stroke-dashoffset .2s linear;
+        stroke: #666;
+        stroke-width: 20px;
+      }
+
+      #svg #bar {
+        stroke: #FF9F1E;
+      }
+
+    </style>
+  </head>
+  <body>
+    {{ content}}
+    <script type="text/javascript" language="javascript" charset="utf-8">
+      //<![CDATA[
+    src = 'https://res.cloudinary.com/active-bridge/image/upload/bridge_front_ncgkbi.png?';
+    var bytes = 1, i = 0, interval;
+    speed = document.getElementById('speedtext')
+    circle = document.getElementById('bar')
+
+    function updateProgress(event) {
+      bytes = event.loaded;
+      progress(event.loaded/event.total * 100);
+    }
+
+    function start(){
+      if (interval) return false
+        xhr = new XMLHttpRequest();
+      xhr.addEventListener("progress", updateProgress);
+      xhr.open('GET', src + Date.now())
+      xhr.send()
+
+      interval = setInterval(function(){
+        i += 1;
+        s = (bytes / 10 / i).toFixed();
+        speed.innerHTML = s + 'KB/s';
+      }, 100)
+    }
+
+    function progress(val) {
+      var r = circle.getAttribute('r');
+      c = Math.PI*(r*2);
+      if (val < 0) { val = 0;}
+      var pct = ((100-val)/100)*c;
+      circle.style.strokeDashoffset = pct;
+      if (val == 100) {
+        clearInterval(interval);
+        interval = null;
+      }
+    }
+
+    //]]>
+    </script>
+  </body>
+</html>
