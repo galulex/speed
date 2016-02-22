@@ -1,7 +1,7 @@
 <script type="text/javascript" language="javascript" charset="utf-8">
-  var interval, bytes = 0, total = 1, i = 0,
-    src = 'https://res.cloudinary.com/active-bridge/image/upload/bridge_front_ncgkbi.png?',
-    speedtext = document.getElementById('speedtext'),
+  var interval, bytes = 0, total = 1, i = 0, pings = []
+    src = 'http://res.cloudinary.com/active-bridge/raw/upload/1MB.zip?',
+    text = document.getElementById('text'),
     circle = document.getElementById('bar'),
     r = circle.getAttribute('r'),
     c = Math.PI * (r * 2);
@@ -21,14 +21,13 @@
     interval = setInterval(function(){
       i += 1;
       s = (bytes / 10 / i).toFixed();
-      speedtext.innerHTML = s + 'KB/s';
+      text.innerHTML = s + 'KB/s';
       progress(bytes/total * 100);
     }, 100)
   }
 
   function progress(val) {
-    var pct = ((100 - val) / 100) * c;
-    circle.style.strokeDashoffset = pct;
+    fill(val)
     if (val == 100) {
       clearInterval(interval);
       interval = null;
@@ -38,15 +37,36 @@
     }
   }
 
+  function fill(val){
+    var pct = ((100 - val) / 100) * c;
+    circle.style.strokeDashoffset = pct;
+  }
+
   function ping() {
+    i += 1;
     var xhr = new XMLHttpRequest(), d = new Date;
     xhr.open('HEAD', src)
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        var time = new Date - d;
+        pings.push(new Date -d);
+        if (i < 11) {
+          fill(i*10);
+          ping();
+          return false;
+        }
+        var sum = pings.reduce(function(a, b) { return a + b; });
+        var avg = sum / pings.length;
+        start()
+        console.log(avg.toFixed());
+        i = 0;
       }
     };
     xhr.send()
+  }
+
+  function init() {
+    text.innerHTML = 'PING';
+    ping();
   }
 
   if (navigator.serviceWorker) {
