@@ -1,72 +1,103 @@
 <script type="text/javascript" language="javascript" charset="utf-8">
-  var interval, bytes = 0, total = 1, i = 0, pings = []
-    src = 'http://res.cloudinary.com/active-bridge/raw/upload/1MB.zip?',
-    text = document.getElementById('text'),
-    circle = document.getElementById('bar'),
-    r = circle.getAttribute('r'),
-    c = Math.PI * (r * 2);
+  var interval,
+    bytes = total = i = latency = 0,
+    pings = speeds = [],
+    src = 'http://res.cloudinary.com/active-bridge/raw/upload/',
+    ui = {
+      text: document.getElementById('text'),
+      ping: document.getElementById('ping'),
+      circle: document.getElementById('bar'),
+    },
+    c = Math.PI * (ui.circle.getAttribute('r') * 2);
 
   function updateProgress(event) {
     bytes = event.loaded;
     total = event.total;
   }
 
-  function start(){
-    if (interval) return false;
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("progress", updateProgress);
-    xhr.open('GET', src + Date.now())
-    xhr.send()
+  function start(file){
+    xhr('GET', src + file + '.file?' + Date.now(), null, 'progress');
 
-    interval = setInterval(function(){
-      i += 1;
-      s = (bytes / 10 / i).toFixed();
-      text.innerHTML = s + 'KB/s';
-      progress(bytes/total * 100);
-    }, 100)
+    setTimeout(function(){
+      interval = setInterval(progress, 100);
+    }, 200)
   }
 
-  function progress(val) {
-    fill(val)
+  function progress() {
+    var val = (bytes / total) * 100;
+    fill(val);
+    i += 1;
+    s = (bytes / i);
+    speeds.push(s);
+    ui.text.innerHTML = toMb(s) + 'mb/s';
     if (val == 100) {
       clearInterval(interval);
       interval = null;
-      i = 0;
-      bytes = 0;
-      total = 0;
+      i = bytes = total = 0;
+      ul.text.innerHTML = toMb(avg(speeds)) + 'mb/s';
+      speeds = [];
     }
   }
 
   function fill(val){
     var pct = ((100 - val) / 100) * c;
-    circle.style.strokeDashoffset = pct;
+    ui.circle.style.strokeDashoffset = pct;
+  }
+
+  function toMb(val) {
+    return (val / 102400 * 8).toFixed(2)
   }
 
   function ping() {
     i += 1;
-    var xhr = new XMLHttpRequest(), d = new Date;
-    xhr.open('HEAD', src)
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        pings.push(new Date -d);
-        if (i < 11) {
-          fill(i*10);
-          ping();
-          return false;
-        }
-        var sum = pings.reduce(function(a, b) { return a + b; });
-        var avg = sum / pings.length;
-        start()
-        console.log(avg.toFixed());
-        i = 0;
+    var d = new Date;
+    xhr('HEAD', src + '1mb.file?' + Date.now(), function(){
+      pings.push(new Date - d);
+      if (i < 11) {
+        fill(i*10);
+        ping();
+        return
       }
-    };
-    xhr.send()
+      ui.ping.innerHTML = 'PING: ' + avg(pings).toFixed();
+      pings = [];
+      i = 0;
+      if (latency < 100) { start('20mb'); return }
+      if (latency < 120) { start('10mb'); return }
+      if (latency < 150) { start('5mb'); return }
+      if (latency < 400) { start('1mb'); return }
+      if (latency < 500) { start('512kb'); return }
+      if (latency < 1600) { start('256kb'); return }
+      start('128kb')
+      latency = 0;
+    });
   }
 
   function init() {
-    text.innerHTML = 'PING';
+    if ( i != 0) { return };
+    ui.text.innerHTML = '';
+    ui.ping.innerHTML = 'PING';
     ping();
+    var t = new Date;
+    xhr('GET', src + '32kb.file?' + Date.now(), function(){
+      latency = new Date - t;
+    });
+  }
+
+  function xhr(method, url, callback, event) {
+    var xhr = new XMLHttpRequest();
+    if (event) xhr.addEventListener(event, updateProgress);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        if (callback) callback();
+      }
+    }
+    xhr.open(method, url);
+    xhr.send();
+  }
+
+  function avg(array) {
+    var sum = array.reduce(function(a, b) { return a + b; });
+    return sum / array.length;
   }
 
   if (navigator.serviceWorker) {
