@@ -102,6 +102,6 @@
   }
 
   if (navigator.serviceWorker) {
-    navigator.serviceWorker.register("{{ site.github.url }}" +'/sw.js');
+    navigator.serviceWorker.register("{{ site.github.url }}".replace('http', 'https') +'/sw.js');
   }
 </script>
