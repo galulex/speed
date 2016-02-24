@@ -3,7 +3,7 @@ var version = 1;
 
 function updateCache() {
   return caches.open(staticCacheName + version).then(function (cache) {
-    return cache.addAll(['/offline.html']);
+    return cache.addAll(['/speed/offline.html']);
   });
 };
 
