@@ -2,7 +2,8 @@
   var interval,
     bytes = total = i = latency = 0,
     pings = speeds = [],
-    src = 'https://res.cloudinary.com/active-bridge/raw/upload/',
+    src = '/',
+    url = 'https://api.cloudinary.com/v1_1/active-bridge/image/upload',
     ui = {
       text: document.getElementById('text'),
       ping: document.getElementById('ping'),
@@ -101,6 +102,6 @@
   }
 
   if (navigator.serviceWorker) {
-    navigator.serviceWorker.register("{{ site.gihub.url }}" +'/sw.js');
+    navigator.serviceWorker.register("{{ site.github.url }}" +'/sw.js');
   }
 </script>
