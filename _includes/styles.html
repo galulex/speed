@@ -10,16 +10,15 @@
     padding: 0;
     text-align: center;
     box-sizing: border-box;
-    background: #2e2e2e;
-    color: #9b59b6;
-    background: linear-gradient(to left top, #111,#2e2e2e) no-repeat;
+    background: #a32;
+    color: #a32;
   }
 
   #svg {
     cursor: pointer;
     display: block;
-    max-height: 80vmin;
-    max-width: 80vmin;
+    max-height: 100vmin;
+    max-width: 100vmin;
     margin: 0 auto;
     top: 50%;
     position: relative;
@@ -29,18 +28,24 @@
   #svg circle {
     stroke-dashoffset: 0;
     transition: stroke-dashoffset .2s linear;
-    stroke-dasharray: 252;
+    stroke-dasharray: 190;
     stroke: #666;
-    stroke-width: 10px;
+    stroke-width: 3px;
+  }
+
+  svg path {
+    stroke-dasharray: 0;
+    stroke: #222;
+    stroke-width: 1px;
   }
 
   #svg text {
     font-size: 1.6vmin;
-    fill: #9b59b6;
+    fill: #222;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
-    stroke: #e2e2e2;
+    stroke: #a32;
     stroke-width: 0.3px;
   }
 
@@ -48,7 +53,7 @@
     font-size: 1.4vmin;
   }
 
-  #svg #bar { stroke: #9b59b6; }
+  #svg #bar { stroke: #222; }
 
   @media only screen and (max-width: 500px) {
     #svg text {

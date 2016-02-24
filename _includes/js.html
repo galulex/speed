@@ -8,6 +8,7 @@
       text: document.getElementById('text'),
       ping: document.getElementById('ping'),
       circle: document.getElementById('bar'),
+      flash: document.getElementById('fflash')
     },
     c = Math.PI * (ui.circle.getAttribute('r') * 2);
 
@@ -75,8 +76,8 @@
 
   function init() {
     if ( i != 0) { return };
-    ui.text.innerHTML = '';
-    ui.ping.innerHTML = 'PING';
+    if (ui.flash) ui.flash.remove();
+    ui.text.innerHTML = 'PING';
     ping();
     var t = new Date;
     xhr('GET', src + '32kb.file?' + Date.now(), function(){

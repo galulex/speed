@@ -3,8 +3,16 @@ layout: default
 ---
 
 <svg id="svg" onclick='init()' viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
-  <circle r="40" cx="50" cy="50" fill="transparent"></circle>
-  <circle id="bar" r="40" cx="50" cy="50" fill="transparent"></circle>
+  <!-- <circle r="30" cx="50" cy="50" fill="white"></circle> -->
+  <defs>
+    <linearGradient id="circle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color: white; stop-opacity:1" />
+      <stop offset="70%" style="stop-color: #eee; stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <path id='flash' d="M70 5 L39 40 L45 39 L38 60 L45 60 L30 95 L65 52 L57 54 L65 35 L58 36 Z" fill='#fe0'/>
+  <circle id="bar" r="30" cx="50" cy="50" fill="url(#circle)"></circle>
   <text id='ping' x="50" y="40" text-anchor='middle'></text>
-  <text id='text' x="50" y="54" text-anchor='middle'>START</text>
+  <text id='text' x="50" y="54" text-anchor='middle'></text>
+  <use id='fflash' xlink:href="#flash"/>
 </svg>

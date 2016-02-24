@@ -7,6 +7,12 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" sizes="192x192" href="/icon.png">
     <title>Speed Test</title>
+    <script type="text/javascript">
+      var host = 'galulex.github.io';
+      if ((host == window.location.host) && (window.location.protocol != 'https:')) {
+        window.location.protocol = 'https';
+      }
+    </script>
     {% include styles.html %}
   </head>
   <body>
