@@ -19,7 +19,7 @@ self.addEventListener('fetch', function (event) {
   var request = event.request;
   if (doesRequestAcceptHtml(request)) {
     event.respondWith(fetch(request).catch(function () {
-      return caches.match('/offline.html');
+      return caches.match('/speed/offline.html');
     }));
   } else {
     event.respondWith(caches.match(request).then(function (response) {
