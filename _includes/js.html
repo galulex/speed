@@ -60,7 +60,7 @@
         ping();
         return
       }
-      ui.ping.innerHTML = 'PING: ' + avg(pings).toFixed();
+      ui.ping.innerHTML = 'ping: ' + avg(pings).toFixed();
       pings = [];
       i = 0;
       if (latency < 100) { start('20mb'); return }
@@ -77,7 +77,7 @@
   function init() {
     if ( i != 0) { return };
     if (ui.flash) ui.flash.id = 'back';
-    ui.text.innerHTML = 'PING';
+    ui.text.innerHTML = 'ping';
     ping();
     var t = new Date;
     xhr('GET', src + '32kb.file?' + Date.now(), function(){
