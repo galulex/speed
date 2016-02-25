@@ -2,8 +2,8 @@
   var interval,
     bytes = total = i = latency = 0,
     pings = speeds = [],
-    src = 'http://res.cloudinary.com/active-bridge/raw/upload/',
-    url = 'https://api.cloudinary.com/v1_1/active-bridge/image/upload',
+    src = '//res.cloudinary.com/active-bridge/raw/upload/',
+    url = '//api.cloudinary.com/v1_1/active-bridge/image/upload',
     ui = {
       text: document.getElementById('text'),
       ping: document.getElementById('ping'),
@@ -76,7 +76,7 @@
 
   function init() {
     if ( i != 0) { return };
-    if (ui.flash) ui.flash.remove();
+    if (ui.flash) ui.flash.id = 'back';
     ui.text.innerHTML = 'PING';
     ping();
     var t = new Date;
