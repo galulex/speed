@@ -3,7 +3,7 @@ var version = 1;
 
 function updateCache() {
   return caches.open(staticCacheName + version).then(function (cache) {
-    return cache.addAll(['/speed/offline.html']);
+    return cache.addAll(['/offline.html']);
   });
 };
 
@@ -19,7 +19,7 @@ self.addEventListener('fetch', function (event) {
   var request = event.request;
   if (doesRequestAcceptHtml(request)) {
     event.respondWith(fetch(request).catch(function () {
-      return caches.match('/speed/offline.html');
+      return caches.match('/offline.html');
     }));
   } else {
     event.respondWith(caches.match(request).then(function (response) {
