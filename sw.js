@@ -1,5 +1,5 @@
 var staticCacheName = 'static';
-var version = 2;
+var version = 3;
 
 function updateCache() {
   return caches.open(staticCacheName + version).then(function (cache) {
